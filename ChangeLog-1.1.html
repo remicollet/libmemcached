@@ -96,6 +96,8 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="changelogs.html">Change Logs</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">ChangeLog v1.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#v-1-1-0-beta3">v 1.1.0-beta3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v-1-1-0-beta2">v 1.1.0-beta2</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#v-1-1-0-beta1">v 1.1.0-beta1</a></li>
 </ul>
 </li>
@@ -174,11 +176,42 @@
             
   <div class="section" id="changelog-v1-1">
 <h1>ChangeLog v1.1<a class="headerlink" href="#changelog-v1-1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v-1-1-0-beta3">
+<h2>v 1.1.0-beta3<a class="headerlink" href="#v-1-1-0-beta3" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>TBR</div></blockquote>
+<p><strong>Changes from beta2:</strong></p>
+<ul class="simple">
+<li>Fix libmemcachedprotocol's binary <code class="docutils literal notranslate"><span class="pre">STAT</span></code> and <code class="docutils literal notranslate"><span class="pre">VERSION</span></code> handlers.</li>
+<li>Fix <a class="reference external" href="https://github.com/m6w6/libmemcached/issues/105">gh #105</a>:
+EINTR handled too defensively when polling.</li>
+</ul>
+</div>
+<div class="section" id="v-1-1-0-beta2">
+<h2>v 1.1.0-beta2<a class="headerlink" href="#v-1-1-0-beta2" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>released 2020-12-28</div></blockquote>
+<p><strong>Changes from beta1:</strong></p>
+<ul class="simple">
+<li>Fix <a class="reference external" href="https://github.com/m6w6/libmemcached/issues/103">gh #103</a>:
+Build failure on 32-bit.</li>
+<li>Fix <a class="reference external" href="https://github.com/m6w6/libmemcached/issues/102">gh #102</a>:
+Doc build with old sphinx.</li>
+<li>Fix <a class="reference external" href="https://github.com/m6w6/libmemcached/issues/100">gh #100</a>:
+Revert symbolic rename of public header include directories.</li>
+<li>Fix <a class="reference external" href="https://github.com/m6w6/libmemcached/issues/98">gh #98</a>:
+Library SONAMEs and NAME_LINKs differ from 1.0.18.</li>
+<li>Fix <a class="reference external" href="https://github.com/m6w6/libmemcached/issues/97">gh #97</a>:
+Location of cmake files installation directory.</li>
+<li>Fix <a class="reference external" href="https://github.com/m6w6/libmemcached/issues/96">gh #96</a>:
+LIBXXX_VERSION_HEX constants format.</li>
+</ul>
+</div>
 <div class="section" id="v-1-1-0-beta1">
 <h2>v 1.1.0-beta1<a class="headerlink" href="#v-1-1-0-beta1" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div>released 2020-12-21</div></blockquote>
-<p><strong>NOTE:</strong>
+<p><strong>NOTE:</strong><span class="raw-html-m2r"><br></span>
 This is a bug fix release, not a feature release. The minor version number
 was incremented due to the following changes:</p>
 <ul class="simple">
