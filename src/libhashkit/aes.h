@@ -15,12 +15,14 @@
 
 #pragma once
 
-struct aes_key_t;
+hashkit_string_st *aes_encrypt(EVP_CIPHER_CTX *encryption_context,
+                               const unsigned char *source,
+                               size_t source_length);
 
-hashkit_string_st *aes_encrypt(aes_key_t *_aes_key, const char *source, size_t source_length);
+hashkit_string_st *aes_decrypt(EVP_CIPHER_CTX *decryption_context,
+                               const unsigned char *source,
+                               size_t source_length);
 
-hashkit_string_st *aes_decrypt(aes_key_t *_aes_key, const char *source, size_t source_length);
-
-aes_key_t *aes_create_key(const char *key, const size_t key_length);
-
-aes_key_t *aes_clone_key(aes_key_t *_aes_key);
+bool aes_initialize(const unsigned char *key, const size_t key_length,
+                    EVP_CIPHER_CTX *encryption_context,
+                    EVP_CIPHER_CTX *decryption_context);

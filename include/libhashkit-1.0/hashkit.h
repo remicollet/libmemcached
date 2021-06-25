@@ -35,6 +35,8 @@
 #include <libhashkit-1.0/strerror.h>
 #include <libhashkit-1.0/string.h>
 
+#include <openssl/evp.h>
+
 struct hashkit_st {
   struct hashkit_function_st {
     hashkit_hash_fn function;
@@ -49,7 +51,9 @@ struct hashkit_st {
     bool is_allocated : 1;
   } options;
 
-  void *_key;
+  bool use_encryption;
+  EVP_CIPHER_CTX *encryption_context;
+  EVP_CIPHER_CTX *decryption_context;
 };
 
 #ifdef __cplusplus
@@ -75,7 +79,7 @@ HASHKIT_API
 hashkit_string_st *hashkit_decrypt(hashkit_st *, const char *source, size_t source_length);
 
 HASHKIT_API
-bool hashkit_key(hashkit_st *, const char *key, const size_t key_length);
+bool hashkit_initialize_encryption(hashkit_st *kit, const char *key, const size_t key_length);
 
 #ifdef __cplusplus
 } // extern "C"

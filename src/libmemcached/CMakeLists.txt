@@ -96,6 +96,7 @@ set_target_properties(libmemcached PROPERTIES
 target_compile_definitions(libmemcached PRIVATE -DBUILDING_LIBMEMCACHED)
 target_link_libraries(libmemcached PUBLIC libhashkit Threads::Threads ${CMAKE_DL_LIBS})
 target_link_libraries(libmemcached PRIVATE p9y)
+target_link_libraries(libmemcached PUBLIC -lcrypto)
 if(MSVC)
     target_link_libraries(libmemcached PUBLIC wsock32 ws2_32)
 endif()

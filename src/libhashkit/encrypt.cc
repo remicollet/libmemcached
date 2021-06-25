@@ -15,20 +15,26 @@
 
 #include "libhashkit/common.h"
 
-hashkit_string_st *hashkit_encrypt(hashkit_st *kit, const char *source, size_t source_length) {
-  return aes_encrypt(static_cast<aes_key_t *>(kit->_key), source, source_length);
+hashkit_string_st *hashkit_encrypt(hashkit_st *kit, const char *source,
+                                   size_t source_length) {
+  return aes_encrypt(kit->encryption_context, (const unsigned char *)source,
+                     source_length);
 }
 
-hashkit_string_st *hashkit_decrypt(hashkit_st *kit, const char *source, size_t source_length) {
-  return aes_decrypt(static_cast<aes_key_t *>(kit->_key), source, source_length);
+hashkit_string_st *hashkit_decrypt(hashkit_st *kit, const char *source,
+                                   size_t source_length) {
+  return aes_decrypt(kit->decryption_context, (const unsigned char *)source,
+                     source_length);
 }
 
-bool hashkit_key(hashkit_st *kit, const char *key, const size_t key_length) {
-  if (kit->_key) {
-    free(kit->_key);
+bool hashkit_initialize_encryption(hashkit_st *kit, const char *key,
+                                   const size_t key_length) {
+  kit->encryption_context = EVP_CIPHER_CTX_new();
+  kit->decryption_context = EVP_CIPHER_CTX_new();
+  if (kit->encryption_context == NULL || kit->decryption_context == NULL) {
+    return false;
   }
-
-  kit->_key = aes_create_key(key, key_length);
-
-  return bool(kit->_key);
+  return kit->use_encryption =
+             aes_initialize((const unsigned char *)key, key_length,
+                            kit->encryption_context, kit->decryption_context);
 }

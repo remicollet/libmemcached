@@ -20,6 +20,6 @@ memcached_return_t memcached_set_encoding_key(memcached_st *shell, const char *k
   if (!shell) {
     return MEMCACHED_INVALID_ARGUMENTS;
   }
-  hashkit_key(&shell->hashkit, key, key_length);
+  hashkit_initialize_encryption(&shell->hashkit, key, key_length);
   return MEMCACHED_SUCCESS;
 }

@@ -15,6 +15,8 @@
 
 #include "libhashkit/common.h"
 
+#include <openssl/evp.h>
+
 static inline void _hashkit_init(hashkit_st *self) {
   self->base_hash.function = hashkit_one_at_a_time;
   self->base_hash.context = NULL;
@@ -23,7 +25,7 @@ static inline void _hashkit_init(hashkit_st *self) {
   self->distribution_hash.context = NULL;
 
   self->flags.is_base_same_distributed = true;
-  self->_key = NULL;
+  self->use_encryption = false;
 }
 
 static inline hashkit_st *_hashkit_create(hashkit_st *self) {
@@ -53,9 +55,10 @@ hashkit_st *hashkit_create(hashkit_st *self) {
 }
 
 void hashkit_free(hashkit_st *self) {
-  if (self and self->_key) {
-    free(self->_key);
-    self->_key = NULL;
+  if (self and self->use_encryption) {
+    EVP_CIPHER_CTX_free(self->encryption_context);
+    EVP_CIPHER_CTX_free(self->decryption_context);
+    self->use_encryption = false;
   }
 
   if (hashkit_is_allocated(self)) {
@@ -79,7 +82,18 @@ hashkit_st *hashkit_clone(hashkit_st *destination, const hashkit_st *source) {
   destination->base_hash = source->base_hash;
   destination->distribution_hash = source->distribution_hash;
   destination->flags = source->flags;
-  destination->_key = aes_clone_key(static_cast<aes_key_t *>(source->_key));
+  destination->use_encryption = source->use_encryption;
+  if (destination->use_encryption) {
+    destination->encryption_context = EVP_CIPHER_CTX_new();
+    destination->decryption_context = EVP_CIPHER_CTX_new();
+    if (destination->encryption_context == NULL ||
+        destination->decryption_context == NULL)
+      return NULL;
+    EVP_CIPHER_CTX_copy(destination->encryption_context,
+                        source->encryption_context);
+    EVP_CIPHER_CTX_copy(destination->decryption_context,
+                        source->decryption_context);
+  }
 
   return destination;
 }

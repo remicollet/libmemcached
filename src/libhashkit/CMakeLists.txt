@@ -17,7 +17,6 @@ set(libhashkit_sources
         murmur3.cc
         murmur3_api.cc
         one_at_a_time.cc
-        rijndael.cc
         str_algorithm.cc
         strerror.cc
         string.cc
@@ -39,6 +38,8 @@ target_include_directories(libhashkit PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
         $<INSTALL_INTERFACE:include>)
+target_link_libraries(libhashkit PUBLIC -lcrypto)
+
 configure_file(hashkitcon.h.in hashkitcon.h @ONLY)
 
 install(TARGETS libhashkit EXPORT libhashkit-targets

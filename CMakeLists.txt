@@ -24,6 +24,11 @@ if(BUILD_DOCS OR BUILD_DOCSONLY)
     add_subdirectory(docs)
 endif()
 
+find_library(CRYPTO_LIB crypto)
+if(NOT CRYPTO_LIB)
+  message(FATAL_ERROR "crypto library not found")
+endif()
+
 if(NOT BUILD_DOCSONLY)
     include(CMake/_Include.cmake)
 
