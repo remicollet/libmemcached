@@ -37,10 +37,10 @@ bool aes_initialize(const unsigned char *key, const size_t key_length,
     return false;
   }
 
-  if (EVP_CIPHER_CTX_init(encryption_context) != 1 ||
-      EVP_EncryptInit_ex(encryption_context, EVP_aes_256_cbc(), NULL, key,
+  EVP_CIPHER_CTX_init(encryption_context);
+  EVP_CIPHER_CTX_init(decryption_context);
+  if (EVP_EncryptInit_ex(encryption_context, EVP_aes_256_cbc(), NULL, key,
                          aes_iv) != 1 ||
-      EVP_CIPHER_CTX_init(decryption_context) != 1 ||
       EVP_DecryptInit_ex(decryption_context, EVP_aes_256_cbc(), NULL, key,
                          aes_iv) != 1) {
     return false;
